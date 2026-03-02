@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — IGSVCS</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<div class="blob"></div><div class="blob"></div><div class="blob"></div>
+<canvas id="bg"></canvas>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,2 37,11 37,29 20,38 3,29 3,11" stroke="#fff" stroke-width="1.5"/>
+      <polygon points="20,8 31,14 31,26 20,32 9,26 9,14" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+      <line x1="20" y1="12" x2="20" y2="28" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+      <line x1="12" y1="20" x2="28" y2="20" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="4.2" stroke="#fff" stroke-width="1.4"/>
+      <circle cx="20" cy="20" r="1.3" fill="#fff"/>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="policy.html">Policy</a>
+    <a href="cart.html" class="cart-link" title="Cart">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span class="cart-badge" id="cart-badge">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="wrapper" id="contact-page">
+  <p class="page-label">Get In Touch</p>
+  <h1>Contact Us</h1>
+  <p class="subtitle">Have a question or ready to order? Reach out and we'll get back to you fast.</p>
+  <div class="divider"></div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      <p>Instagram</p>
+      <a href="https://instagram.com/nqdave" target="_blank">@nqdave</a>
+    </div>
+    <div class="contact-card">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      <p>Email</p>
+      <a href="mailto:contact@nqdave.io">contact@nqdave.io</a>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <form action="https://api.web3forms.com/submit" method="POST" onsubmit="submitContact(event)">
+      <input type="hidden" name="access_key" value="16b9d2b5-caae-4dc9-b34f-f3c46234fa9f"/>
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" name="name" placeholder="John Doe" required/>
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="you@email.com" required/>
+      </div>
+      <div class="form-row">
+        <label>Subject</label>
+        <select name="subject" required>
+          <option value="" disabled selected>What is this about?</option>
+          <option>Username Claim</option>
+          <option>Account Ban</option>
+          <option>Unban</option>
+          <option>Unshadowban</option>
+          <option>Order Status</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Message</label>
+        <textarea name="message" placeholder="Tell us what you need..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:15px;font-size:0.88rem;">
+        Send Message →
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="wrapper" id="sent-msg" style="display:none;">
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <p class="page-label">Message Sent</p>
+  <h1>Got It!</h1>
+  <p class="subtitle">We'll get back to you as soon as possible, usually within a few hours.</p>
+  <div class="divider"></div>
+  <a href="index.html" class="btn btn-outline">Back to Home</a>
+</div>
+
+<footer>
+  © 2026 IGSVCS &nbsp;·&nbsp;
+  <a href="policy.html">Refund Policy</a> &nbsp;·&nbsp;
+  <a href="contact.html">Contact</a>
+</footer>
+
+<script src="cart.js"></script>
+<script src="bg.js"></script>
+<script>
+  async function submitContact(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST', body: new FormData(form)
+    });
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('contact-page').style.display = 'none';
+      document.getElementById('sent-msg').style.display = 'flex';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Send Message →';
+      alert('Something went wrong. Please try again.');
+    }
+  }
+</script>
+</body>
+</html>

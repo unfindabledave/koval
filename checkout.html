@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout — IGSVCS</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<div class="blob"></div><div class="blob"></div><div class="blob"></div>
+<canvas id="bg"></canvas>
+
+<nav>
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,2 37,11 37,29 20,38 3,29 3,11" stroke="#fff" stroke-width="1.5"/>
+      <polygon points="20,8 31,14 31,26 20,32 9,26 9,14" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+      <line x1="20" y1="12" x2="20" y2="28" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+      <line x1="12" y1="20" x2="28" y2="20" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="20" cy="20" r="4.2" stroke="#fff" stroke-width="1.4"/>
+      <circle cx="20" cy="20" r="1.3" fill="#fff"/>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+    <a href="policy.html">Policy</a>
+    <a href="cart.html" class="cart-link" title="Cart">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span class="cart-badge" id="cart-badge">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="wrapper" id="checkout-page">
+  <p class="page-label">Secure Checkout</p>
+  <h1>Complete<br>Your Order</h1>
+  <p class="subtitle">Fill in your details and we'll reach out to confirm and begin your service.</p>
+  <div class="divider"></div>
+
+  <div class="order-summary-box">
+    <h3>Order Summary</h3>
+    <div id="summary-lines"></div>
+  </div>
+
+  <div class="form-wrap">
+    <form id="checkout-form" onsubmit="submitOrder(event)">
+      <div class="form-row">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" required/>
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@email.com" required/>
+        <p class="form-hint">Order confirmation will be sent here.</p>
+      </div>
+      <div class="form-row">
+        <label>Instagram Username</label>
+        <input type="text" placeholder="@yourhandle" required/>
+        <p class="form-hint">Target account for your selected service.</p>
+      </div>
+      <div class="form-row">
+        <label>Service Notes (optional)</label>
+        <textarea placeholder="Any additional details..."></textarea>
+      </div>
+      <div class="form-row">
+        <label>Payment Method</label>
+        <select required>
+          <option value="" disabled selected>Select payment method</option>
+          <option value="usdt-eth">USDT · ERC-20 (Ethereum)</option>
+          <option value="sol">SOL · Solana Network</option>
+          <option value="btc">BTC · Bitcoin Network</option>
+          <option value="tron">USDT · TRC-20 (Tron)</option>
+        </select>
+        <p class="form-hint">You will receive the wallet address on the next step.</p>
+      </div>
+<button type="submit" class="btn btn-primary" style="width:100%;margin-top:22px;padding:16px;font-size:0.88rem;">
+        Place Order →
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="wrapper" id="success-page" style="display:none;">
+  <p class="page-label">Complete Payment</p>
+  <h1>Send Your<br>Payment</h1>
+  <p class="subtitle">Send the exact amount to the address below. Your order will begin once payment is confirmed.</p>
+  <div class="divider"></div>
+
+  <div class="crypto-list">
+
+    <div class="crypto-box">
+      <span class="network-badge">USDT · ERC-20 (Ethereum)</span>
+      <p class="crypto-label">Wallet Address</p>
+      <div class="crypto-address-row">
+        <span class="crypto-addr-text">0x4f513e8fc9f4eefe3b85131c35306c05073e71a0</span>
+        <button onclick="copyAddr(this,'0x4f513e8fc9f4eefe3b85131c35306c05073e71a0')" class="copy-btn" title="Copy">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="copy-label">Copy</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="crypto-box">
+      <span class="network-badge">SOL · Solana Network</span>
+      <p class="crypto-label">Wallet Address</p>
+      <div class="crypto-address-row">
+        <span class="crypto-addr-text">5DmVzqoJJSgtdWKQhxQx4wLTTbmHvQHRF5ExZGvcDGbm</span>
+        <button onclick="copyAddr(this,'5DmVzqoJJSgtdWKQhxQx4wLTTbmHvQHRF5ExZGvcDGbm')" class="copy-btn" title="Copy">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="copy-label">Copy</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="crypto-box">
+      <span class="network-badge">BTC · Bitcoin Network</span>
+      <p class="crypto-label">Wallet Address</p>
+      <div class="crypto-address-row">
+        <span class="crypto-addr-text">1Jt26bHrgE3ViCKVKpKi54ZAQhGKAuhiHJ</span>
+        <button onclick="copyAddr(this,'1Jt26bHrgE3ViCKVKpKi54ZAQhGKAuhiHJ')" class="copy-btn" title="Copy">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="copy-label">Copy</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="crypto-box">
+      <span class="network-badge">USDT · TRC-20 (Tron)</span>
+      <p class="crypto-label">Wallet Address</p>
+      <div class="crypto-address-row">
+        <span class="crypto-addr-text">TCjVYJewhRdqpXHyUtUB319LSv2XfhZ19X</span>
+        <button onclick="copyAddr(this,'TCjVYJewhRdqpXHyUtUB319LSv2XfhZ19X')" class="copy-btn" title="Copy">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="copy-label">Copy</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <p class="crypto-warn" style="margin-top:16px;">⚠ Send only on the correct network. Sending on the wrong network will result in permanent loss of funds.</p>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:32px;">
+    <a href="index.html" class="btn btn-outline">Back to Home</a>
+    <a href="contact.html" class="btn btn-primary">I've Sent Payment →</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 IGSVCS &nbsp;·&nbsp;
+  <a href="policy.html">Refund Policy</a> &nbsp;·&nbsp;
+  <a href="contact.html">Contact</a>
+</footer>
+
+<script src="cart.js"></script>
+<script src="bg.js"></script>
+<script>
+  function renderSummary() {
+    const items = Cart.get();
+    if (items.length === 0) { window.location.href = 'cart.html'; return; }
+    document.getElementById('summary-lines').innerHTML =
+      items.map(i => `<div class="summary-line"><span>${i.name} × ${i.qty}</span><span>$${(i.price*i.qty).toLocaleString()}</span></div>`).join('') +
+      `<div class="summary-line total"><span>Total</span><span>$${Cart.total().toLocaleString()}</span></div>`;
+  }
+  function submitOrder(e) {
+    e.preventDefault();
+    Cart.clear();
+    document.getElementById('checkout-page').style.display = 'none';
+    document.getElementById('success-page').style.display = 'flex';
+  }
+  function copyAddr(btn, addr) {
+    navigator.clipboard.writeText(addr);
+    const lbl = btn.querySelector('.copy-label');
+    lbl.textContent = 'Copied!';
+    setTimeout(() => lbl.textContent = 'Copy', 2000);
+  }
+  renderSummary();
+</script>
+</body>
+</html>

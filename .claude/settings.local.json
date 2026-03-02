@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npx)",
+      "Bash(where python)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:3000/portfolio/proof-1.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:3000/portfolio/proof-2.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:3000/portfolio/proof-3.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:3000/portfolio/proof-4.png)",
+      "Bash(grep -l \"brand-name\\\\|IGSVCS\\\\|brand-text\\\\|brand-tag\" /c/Windows/System32/ig-services/*.html)",
+      "Bash(python3 -:*)",
+      "Bash(py --version)",
+      "Bash(python3.exe --version)",
+      "Bash(py -:*)",
+      "Bash(net session)",
+      "Bash(icacls \"C:/Windows/System32/ig-services/cart.html\")",
+      "Bash(py /tmp/fix_svgs.py)",
+      "Bash(/tmp/fix_svgs.py:*)",
+      "Bash(powershell -Command \"Start-Process py -ArgumentList ''/tmp/fix_svgs.py'' -Verb RunAs -Wait\")"
+    ]
+  }
+}
